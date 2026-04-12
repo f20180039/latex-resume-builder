@@ -1,0 +1,19 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.synctex(busy)
+
+# Generated PDFs (optional - uncomment if you don't want to track PDFs)
+# *.pdf
+
+# Build directory
+build/
+
+# Font cache
+missfont.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db

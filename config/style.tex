@@ -1,0 +1,43 @@
+% Styling and Package Configuration
+% This file contains all LaTeX package declarations and styling settings
+
+% Character encoding and language
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+% Text alignment
+\usepackage[document]{ragged2e}
+
+% Colors
+\usepackage{xcolor}
+
+% Page geometry
+\usepackage[a4paper, margin=0.25in]{geometry}
+
+% Multi-column layout
+\usepackage{multicol}
+
+% Table arrays and column customization
+\usepackage{array}
+
+% Font Awesome icons
+\usepackage{fontawesome}
+
+% Hyperlinks
+\usepackage[hidelinks, unicode]{hyperref}
+
+% Section title spacing
+\usepackage[compact]{titlesec}
+\titlespacing*{\section}{0pt}{5pt plus 0pt minus 0pt}{0pt plus 2pt minus 2pt}
+
+% Hyphenation control
+\usepackage{hyphenat}
+
+% Graphics
+\usepackage{graphicx}
+\graphicspath{ {./media/} }
+
+% List formatting
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*}
+\setitemize{noitemsep,topsep=0.4pt,parsep=0.75pt,partopsep=1pt,leftmargin=*}
