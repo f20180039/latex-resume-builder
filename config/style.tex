@@ -16,6 +16,9 @@
 
 % Multi-column layout
 \usepackage{multicol}
+% Multi-column layout configuration
+\setlength{\columnsep}{0.02\textwidth}  % 2% page width gap between columns
+\setlength{\columnseprule}{0pt}          % No vertical rule between columns
 
 % Table arrays and column customization
 \usepackage{array}
@@ -28,7 +31,7 @@
 
 % Section title spacing
 \usepackage[compact]{titlesec}
-\titlespacing*{\section}{0pt}{5pt plus 0pt minus 0pt}{0pt plus 2pt minus 2pt}
+\titlespacing*{\section}{0pt}{4pt plus 0pt minus 0pt}{0pt plus 2pt minus 2pt}
 
 % Hyphenation control
 \usepackage{hyphenat}
@@ -40,4 +43,4 @@
 % List formatting
 \usepackage{enumitem}
 \setlist[itemize]{leftmargin=*}
-\setitemize{noitemsep,topsep=0.4pt,parsep=0.75pt,partopsep=1pt,leftmargin=*}
+\setitemize{noitemsep,topsep=0.2pt,parsep=0.5pt,partopsep=0.5pt,leftmargin=*}

@@ -1,14 +1,14 @@
 \documentclass[10pt]{extarticle}
 
 % Import styling and package configuration
-\input{config/style.tex}
+\input{../config/style.tex}
 
 \title{Curriculum vitae}
 \author{ANSHUMAN SINGH}
 
 % Import custom commands and profile data
-\input{config/commands.tex}
-\input{config/profile.tex}
+\input{../config/commands.tex}
+\input{../config/profile.tex}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -19,24 +19,21 @@
 
 \makeheader
 
-\begin{multicols}{2}
-\raggedright  % Prevents justification issues in narrow columns
+% Single column layout - all sections flow vertically
+\input{../sections/experience.tex}
+\vspace{2mm}
 
-\input{sections/experience.tex}
-\vspace{1mm}
-\input{sections/education.tex}
-\vspace{2.5mm}
-\input{sections/achievements.tex}
-\vspace{2.5mm}
-\input{sections/projects.tex}
-\vspace{2.5mm}
-\input{sections/skills.tex}
+\input{../sections/projects.tex}
+\vspace{2mm}
+
+\input{../sections/skills.tex}
+\vspace{2mm}
+
+\input{../sections/education.tex}
 
 \textcolor{white}{
    Highly skilled in React, TypeScript, AI integrations, and frontend optimization. Proven experience in healthcare tech and large-scale application development.
 }
-
-\end{multicols}
 
 \endgroup
 \end{document}

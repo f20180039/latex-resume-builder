@@ -4,13 +4,13 @@
 LATEX = xelatex
 LATEX_FLAGS = -interaction=nonstopmode
 
-.PHONY: all clean cleanall variants swe data help
+.PHONY: all clean cleanall variants swe data single-col help
 
 # Default target: build main resume
 all: resume.pdf
 
 # Build all variants
-variants: swe data
+variants: swe data single-col
 
 # Build main resume
 resume.pdf: resume.tex config/*.tex sections/*.tex
@@ -52,6 +52,20 @@ variants/resume-data.pdf: variants/resume-data.tex config/*.tex sections/*.tex
 		exit 1; \
 	fi
 
+# Build Single Column variant
+single-col: variants/resume-single-col.pdf
+
+variants/resume-single-col.pdf: variants/resume-single-col.tex config/*.tex sections/*.tex
+	@echo "Building Single Column variant..."
+	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-single-col.tex > /dev/null 2>&1 || true
+	@if [ -f variants/resume-single-col.pdf ]; then \
+		echo "✓ Built variants/resume-single-col.pdf"; \
+	else \
+		echo "✗ Build failed"; \
+		[ -f variants/resume-single-col.log ] && cat variants/resume-single-col.log; \
+		exit 1; \
+	fi
+
 # Clean build artifacts
 clean:
 	@rm -f *.aux *.log *.out *.synctex.gz *.synctex\(busy\) missfont.log
@@ -68,13 +82,14 @@ help:
 	@echo "LaTeX Resume Build System"
 	@echo ""
 	@echo "Usage:"
-	@echo "  make           - Build main resume.pdf"
-	@echo "  make variants  - Build all resume variants (SWE, Data Science)"
-	@echo "  make swe       - Build Software Engineering variant"
-	@echo "  make data      - Build Data Science variant"
-	@echo "  make clean     - Remove build artifacts (.aux, .log, etc.)"
-	@echo "  make cleanall  - Remove all generated files including PDFs"
-	@echo "  make help      - Show this help message"
+	@echo "  make             - Build main resume.pdf"
+	@echo "  make variants    - Build all resume variants (SWE, Data Science, Single Column)"
+	@echo "  make swe         - Build Software Engineering variant"
+	@echo "  make data        - Build Data Science variant"
+	@echo "  make single-col  - Build Single Column variant"
+	@echo "  make clean       - Remove build artifacts (.aux, .log, etc.)"
+	@echo "  make cleanall    - Remove all generated files including PDFs"
+	@echo "  make help        - Show this help message"
 	@echo ""
 	@echo "File structure:"
 	@echo "  resume.tex        - Main resume document"

@@ -1,0 +1,179 @@
+This files contains some points and a brief summary on that for the last year. Extract relevant information from these and add to different sections of a professional seasoned developer.
+
+
+
+1. Job Knowledge & Skills
+
+KPI 1: Production Excellence and Platform Stability.
+Progress: Managed and closed approximately 200
+tickets this year, including over 22 High-Priority
+(P0/P1) production hot fixes. By integrating Sentry for
+real-time monitoring and custom sampling, I moved
+the platform from reactive bug-fixing to proactive
+observability, ensuring that critical user journeys
+remain uninterrupted.
+KPI 2: Revenue Integrity and Product Performance.
+Progress: I successfully identified and resolved 90%
+of cases related to outperforming ads that were
+causing revenue leakage. Additionally, I stabilized the
+IPD/OPD billing systems by resolving high-stakes
+regressions in deposit calculations and payment-split
+logic, directly protecting the company's bottom line.
+KPI 3: Engineering Efficiency and Codebase
+Modernization.
+Progress: I led the initiative to reduce code
+duplication by abstracting core features, most notably
+the Patient Popup component, which is now unified
+across OPD and Lab modules. By implementing
+TypeScript for type safety, migrating to Zustand for
+state management, and reducing the overall code
+size, I have significantly lowered the effort required for
+future feature maintenance.
+
+2. Quality of Work & Productivity
+Key Hits:
+AI Integration: Led the front-end delivery of the HALO
+AI Summarization and Dictation modules, managing
+complex SSE (Server-Sent Events) and real-time
+data parsing.
+Revenue Recovery: Solved 90% of
+revenue-impacting ad performance issues and
+currently managing a production task with direct
+revenue impact.
+Architectural Initiative: Incorporated knowledge of
+Brownbag sessions to our FE repositories and UI dev
+kit to more modern standards (Shadcn/Tailwind).
+Key Misses:
+Cross-Repository Parity RCA: I had one RCA this
+year caused by a logic mismatch between two parallel
+repositories while rushing a production hotfix.
+Correction: I owned the mistake and have since
+implemented a "Cross-Repo Sync Checklist" to
+ensure feature parity in our hybrid PHP/React
+environment before any deployment.
+
+
+ Problem-Solving & Decision-Making
+ Context-Aware Patient Search Component.
+The Problem: Doctors needed to enter multiple data
+points (Name, Age, Gender, Phone) rapidly, but
+standard dropdowns only allowed searching by one
+attribute at a time.
+The Creative Solution: I engineered a custom search
+engine that handles comma-separated string parsing.
+I decoupled the UI display from the API query logic,
+allowing a doctor to type "John, 30, M" and have the
+system intelligently search for the name while
+pre-filling the age and gender filters. I used intricate
+CSS transforms to ensure the navigation tabs
+remained visible and "sticky" on the edge of the
+drawer even during complex animations, providing a
+seamless UX.
+
+
+Communication Skills
+I stay focused during PRD walkthroughs, asking as
+many questions as needed to make sure I understand
+the workflows and expected behaviour.
+Before I start coding, I always sync up with the
+Backend team to lock in API contracts so we are both
+on the same page about what to expect. If I hit a
+roadblock or realise a task might take longer than
+planned, I flag it in our daily stand-ups or on Slack.
+Keeping things visible this way helps me get the
+support I need early to clear blockers and keep our
+deadlines on track.
+
+Teamwork & Collaboration
+I tend to stay focused on my own tasks to keep my
+momentum, but I make myself highly accessible to
+the team. If I get a message or a ping for help, I make
+it a priority to jump in immediately and help resolve
+the issue so that no one stays blocked for long.
+
+Attendance & Punctuality
+I break down large epics into atomic tasks. This allow
+me to hit daily milestones and provide highly accurate
+story-point estimations. I also use automated
+reminders to ensure I am consistently ready for daily
+stand-ups and sync-ups 5 minutes before they begin.
+
+
+Professional Growth & Development
+This year, I have focused on evolving from a
+specialized Front-End developer into a more versatile
+Full Stack Engineer. While my core remains in the
+frontend, I have successfully started my journey into
+backend logic and system health.
+Here are the key skills I’ve developed:
+Foundational Full-Stack Agility: I have begun bridging
+the gap between frontend and backend by exploring
+real-time data flow. Using AI-assisted engineering, I
+successfully implemented WebSockets for a
+multiplayer game project, allowing me to understand
+the complexities of server-side game-room logic and
+bi-directional state synchronization.
+Advanced UI Architecture & Logic: I’ve moved beyond
+standard component libraries to master CSS
+Coordinate Systems and 2D Transforms. This allowed
+me to build bespoke UI patterns, such as
+edge-anchored navigation and custom search
+engines capable of complex, multi-variable string
+parsing.
+Performance-Driven State Management: I have
+deepened my expertise in Zustand, leading the
+transition of complex modules from legacy state
+patterns to high-performance, atomic state
+management. This has significantly improved
+application responsiveness and developer readability.
+Engineering Observability & Security: I’ve adopted a
+"Production-First" mindset by implementing Sentry for
+granular error tracking and Firebase for secure
+authentication workflows.
+AI-Orchestrated Development: I have integrated AI
+Agents (like Claude) into my daily workflow. Rather
+than just using AI for snippets, I use it as an
+orchestration tool to accelerate prototyping and bridge
+the domain gap when exploring backend architecture
+or complex logic.
+Technical Maturity & SOLID Principles: I have
+transitioned from a functional understanding of my
+stack to an architectural one. I have been able to
+reduce technical debt through high-level component
+abstraction (e.g., the Unified Patient Popup) and
+improve maintainability across our React repositories.
+
+
+Strengths & Areas for Improvement
+
+My primary improvement area last year was bridging
+the gap between functional execution and
+architectural leadership. I recognised the need to
+move beyond simply implementing features to
+designing scalable, maintainable systems that match
+my years of experience.
+How I addressed this:
+Targeted Technical Upskilling: Invested time in
+high-level tutorials and deep-dive technical resources,
+including official documentation, Udemy architecture
+courses, and system design deep-dives. My focus
+was on mastering System Design patterns and the
+internal workings of our React stack.
+Proactive Codebase Optimisation: I transitioned from
+a "bug-fixing" mindset to an "optimisation" mindset. I
+took the initiative to identify systemic weaknesses in
+our code, such as duplicate logic in our
+patient-related modules.
+
+
+Professional Goals for Next Year
+A key part of my personal growth is scaling my knowledge.
+While AI is excellent at generating code snippets, it struggles with
+designing maintainable, scalable systems within a complex legacy
+environment.
+Rather than fearing AI replacement, I intend to master AI-Assisted
+Workflow Orchestration. My goal is to become an expert at using AI
+agents to handle the "commodity" parts of development—such as
+boilerplate, unit tests, and basic documentation—so I can focus my
+human judgment on high-value areas like performance optimization,
+security, and complex business logic.
