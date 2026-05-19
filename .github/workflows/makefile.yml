@@ -1,0 +1,82 @@
+name: Build Resume PDFs
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      PORTFOLIO_REPO_TOKEN: ${{ secrets.PORTFOLIO_REPO_TOKEN }}
+      PORTFOLIO_REPOSITORY: f20180039/anshuman-singh
+      PORTFOLIO_RESUME_DIR: public/resume
+
+    steps:
+      - name: Checkout resume repo
+        uses: actions/checkout@v4
+
+      - name: Install TinyTeX
+        run: |
+          curl -sL https://yihui.org/tinytex/install-unx.sh | sh
+          echo "$HOME/.TinyTeX/bin/x86_64-linux" >> "$GITHUB_PATH"
+
+      - name: Install LaTeX packages
+        run: |
+          tlmgr install \
+            babel-english \
+            enumitem \
+            extsizes \
+            fontawesome \
+            fontspec \
+            footmisc \
+            geometry \
+            graphics \
+            hyphenat \
+            hyperref \
+            ragged2e \
+            titlesec \
+            tools \
+            xcolor
+
+      - name: Build resume PDFs
+        run: |
+          make -B
+          make -B single-col
+
+      - name: Upload built PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-pdfs
+          path: |
+            Anshuman_Singh_4FE.pdf
+            variants/resume-single-col.pdf
+
+      - name: Checkout portfolio repo
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && env.PORTFOLIO_REPO_TOKEN != ''
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PORTFOLIO_REPOSITORY }}
+          token: ${{ env.PORTFOLIO_REPO_TOKEN }}
+          path: portfolio
+
+      - name: Copy resume PDFs into portfolio
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && env.PORTFOLIO_REPO_TOKEN != ''
+        run: |
+          mkdir -p "portfolio/${PORTFOLIO_RESUME_DIR}"
+          cp Anshuman_Singh_4FE.pdf "portfolio/${PORTFOLIO_RESUME_DIR}/resume-multicol.pdf"
+          cp variants/resume-single-col.pdf "portfolio/${PORTFOLIO_RESUME_DIR}/resume-single-col.pdf"
+
+      - name: Commit and push portfolio updates
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && env.PORTFOLIO_REPO_TOKEN != ''
+        working-directory: portfolio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${PORTFOLIO_RESUME_DIR}/resume-multicol.pdf" "${PORTFOLIO_RESUME_DIR}/resume-single-col.pdf"
+          git commit -m "Update resume PDFs" || exit 0
+          git push
