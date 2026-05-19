@@ -15,7 +15,7 @@
   \section*{\sc #1}
   \vspace{-1mm}
   \hrulefill
-  \vspace{.2cm}
+  \vspace{.12cm}
 }
 
 % Section header without horizontal rule
@@ -38,6 +38,19 @@
 
   #5
   \vspace{1.2mm}
+}
+
+% Compact project entry with title and date on the same line
+\newcommand{\projectentry}[4]{
+  {\small \strong{#1}} \hfill {\footnotesize #2}%
+  \if\relax\detokenize{#3}\relax
+    \\[-1mm]
+  \else
+    \\[-0.5mm]{\footnotesize \emph{#3}}
+  \fi
+
+  #4
+  \vspace{0.25mm}
 }
 
 % Small CV entry for education section

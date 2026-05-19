@@ -67,5 +67,6 @@ make cleanall    # Remove artifacts and generated PDFs
 - Portfolio Website is included as a project.
 - Exploding Production Game is included as a project: `https://exploding-production.onrender.com`.
 - Multiplayer Game Hub is included as a project: `https://multiplayer-frontend-x0cb.onrender.com`.
-- Header/contact fields use readable text links instead of icon-only labels.
-- Hidden white SEO keyword text and rupee glyphs were removed for ATS friendliness.
+- Header/contact fields use readable text links with FontAwesome icons.
+- Hidden ATS keyword text is centralized in `sections/ats-keywords.tex` and rendered with zero layout height.
+- Rupee glyphs were replaced with `INR` to avoid missing-character warnings.
