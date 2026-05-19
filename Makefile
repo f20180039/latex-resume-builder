@@ -1,34 +1,59 @@
 # LaTeX Resume Builder
 # Uses XeLaTeX for font support and Unicode compatibility
 
-LATEX = xelatex
+TINYTEX_BIN = $(HOME)/Library/TinyTeX/bin/universal-darwin
+LATEX = $(if $(wildcard $(TINYTEX_BIN)/xelatex),$(TINYTEX_BIN)/xelatex,xelatex)
 LATEX_FLAGS = -interaction=nonstopmode
+FULL_NAME_SAFE = Anshuman_Singh
+YEARS_OF_EXPERIENCE = 4
+ROLE_ABBREV = FE
+FE_JOBNAME = $(FULL_NAME_SAFE)_$(YEARS_OF_EXPERIENCE)$(ROLE_ABBREV)
+FE_OUTPUT = $(FE_JOBNAME).pdf
+COMMON_DEPS = config/*.tex sections/*.tex
 
-.PHONY: all clean cleanall variants swe data single-col help
+.PHONY: all resume clean cleanall variants swe data single-col help
 
-# Default target: build main resume
-all: resume.pdf
+# Default target: build frontend resume
+all: $(FE_OUTPUT)
+
+# Alias for the main frontend resume
+resume: $(FE_OUTPUT)
 
 # Build all variants
 variants: swe data single-col
 
-# Build main resume
-resume.pdf: resume.tex config/*.tex sections/*.tex
-	@echo "Building resume.pdf..."
-	@$(LATEX) $(LATEX_FLAGS) resume.tex > /dev/null 2>&1 || true
-	@if [ -f resume.pdf ]; then \
-		echo "✓ Built resume.pdf"; \
-	else \
-		echo "✗ Build failed"; \
-		cat resume.log; \
+# Build main frontend resume with role-specific output filename
+$(FE_OUTPUT): resume.tex $(COMMON_DEPS)
+	@echo "Building $(FE_OUTPUT)..."
+	@if ! command -v $(LATEX) > /dev/null 2>&1; then \
+		echo "✗ $(LATEX) not found. Install XeLaTeX to build PDFs."; \
 		exit 1; \
 	fi
+	@$(LATEX) $(LATEX_FLAGS) -jobname=$(FE_JOBNAME) resume.tex > /dev/null 2>&1 || true
+	@$(LATEX) $(LATEX_FLAGS) -jobname=$(FE_JOBNAME) resume.tex > /dev/null 2>&1 || true
+	@if [ -f $(FE_OUTPUT) ]; then \
+		echo "✓ Built $(FE_OUTPUT)"; \
+	else \
+		echo "✗ Build failed"; \
+		[ -f $(FE_JOBNAME).log ] && cat $(FE_JOBNAME).log; \
+		exit 1; \
+	fi
+
+# Compatibility target for older workflows
+resume.pdf: $(FE_OUTPUT)
+	@cp $(FE_OUTPUT) resume.pdf
+	@echo "✓ Copied $(FE_OUTPUT) to resume.pdf"
 
 # Build Software Engineering variant
 swe: variants/resume-swe.pdf
 
-variants/resume-swe.pdf: variants/resume-swe.tex config/*.tex sections/*.tex
+variants/resume-swe.pdf: variants/resume-swe.tex $(COMMON_DEPS)
 	@echo "Building Software Engineering variant..."
+	@if ! command -v $(LATEX) > /dev/null 2>&1; then \
+		echo "✗ $(LATEX) not found. Install XeLaTeX to build PDFs."; \
+		exit 1; \
+	fi
+	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-swe.tex > /dev/null 2>&1 || true
 	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-swe.tex > /dev/null 2>&1 || true
 	@if [ -f variants/resume-swe.pdf ]; then \
 		echo "✓ Built variants/resume-swe.pdf"; \
@@ -41,8 +66,13 @@ variants/resume-swe.pdf: variants/resume-swe.tex config/*.tex sections/*.tex
 # Build Data Science variant
 data: variants/resume-data.pdf
 
-variants/resume-data.pdf: variants/resume-data.tex config/*.tex sections/*.tex
+variants/resume-data.pdf: variants/resume-data.tex $(COMMON_DEPS)
 	@echo "Building Data Science variant..."
+	@if ! command -v $(LATEX) > /dev/null 2>&1; then \
+		echo "✗ $(LATEX) not found. Install XeLaTeX to build PDFs."; \
+		exit 1; \
+	fi
+	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-data.tex > /dev/null 2>&1 || true
 	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-data.tex > /dev/null 2>&1 || true
 	@if [ -f variants/resume-data.pdf ]; then \
 		echo "✓ Built variants/resume-data.pdf"; \
@@ -55,8 +85,13 @@ variants/resume-data.pdf: variants/resume-data.tex config/*.tex sections/*.tex
 # Build Single Column variant
 single-col: variants/resume-single-col.pdf
 
-variants/resume-single-col.pdf: variants/resume-single-col.tex config/*.tex sections/*.tex
+variants/resume-single-col.pdf: variants/resume-single-col.tex $(COMMON_DEPS)
 	@echo "Building Single Column variant..."
+	@if ! command -v $(LATEX) > /dev/null 2>&1; then \
+		echo "✗ $(LATEX) not found. Install XeLaTeX to build PDFs."; \
+		exit 1; \
+	fi
+	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-single-col.tex > /dev/null 2>&1 || true
 	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-single-col.tex > /dev/null 2>&1 || true
 	@if [ -f variants/resume-single-col.pdf ]; then \
 		echo "✓ Built variants/resume-single-col.pdf"; \
@@ -82,7 +117,9 @@ help:
 	@echo "LaTeX Resume Build System"
 	@echo ""
 	@echo "Usage:"
-	@echo "  make             - Build main resume.pdf"
+	@echo "  make             - Build $(FE_OUTPUT)"
+	@echo "  make resume      - Build $(FE_OUTPUT)"
+	@echo "  make resume.pdf  - Build $(FE_OUTPUT) and copy it to resume.pdf"
 	@echo "  make variants    - Build all resume variants (SWE, Data Science, Single Column)"
 	@echo "  make swe         - Build Software Engineering variant"
 	@echo "  make data        - Build Data Science variant"

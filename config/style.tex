@@ -1,8 +1,7 @@
 % Styling and Package Configuration
 % This file contains all LaTeX package declarations and styling settings
 
-% Character encoding and language
-\usepackage[utf8]{inputenc}
+% Language
 \usepackage[english]{babel}
 
 % Text alignment
@@ -24,6 +23,14 @@
 \usepackage{array}
 
 % Font Awesome icons
+\usepackage{fontspec}
+\IfFileExists{fonts/FontAwesome.ttf}{
+  \defaultfontfeatures[FontAwesome]{Path=fonts/, Extension=.ttf}
+}{
+  \IfFileExists{../fonts/FontAwesome.ttf}{
+    \defaultfontfeatures[FontAwesome]{Path=../fonts/, Extension=.ttf}
+  }{}
+}
 \usepackage{fontawesome}
 
 % Hyperlinks
