@@ -28,6 +28,7 @@ jobs:
       - name: Install LaTeX packages
         run: |
           tlmgr install \
+            accsupp \
             babel-english \
             enumitem \
             extsizes \
