@@ -53,6 +53,7 @@ This is a modular, maintainable LaTeX resume template system that has been refac
 ### Main Files
 
 **resume.tex** (48 lines)
+
 - Entry point for main resume
 - Minimal structure: imports config, generates header, includes sections
 - Uses two-column layout with minipage
@@ -61,12 +62,14 @@ This is a modular, maintainable LaTeX resume template system that has been refac
 ### Configuration Files
 
 **config/profile.tex** (11 lines)
+
 - **THIS IS THE SINGLE SOURCE OF TRUTH FOR PERSONAL DATA**
 - Defines LaTeX macros: `\fullname`, `\email`, `\phone`, `\linkedin`, `\linkedinhandle`, `\jobtitle`, `\education`
 - Changes here propagate to all resume variants automatically
 - No LaTeX code, just `\def` statements
 
 **config/style.tex** (42 lines)
+
 - All `\usepackage` declarations
 - Page geometry (margins, paper size)
 - List formatting (itemize spacing)
@@ -75,6 +78,7 @@ This is a modular, maintainable LaTeX resume template system that has been refac
 - **MODIFY HERE** to change: margins, colors, fonts, spacing
 
 **config/commands.tex** (69 lines)
+
 - Custom LaTeX command definitions
 - Key commands:
   - `\strong{text}` - Bold with nested toggle (complex \makeatletter logic)
@@ -90,43 +94,51 @@ This is a modular, maintainable LaTeX resume template system that has been refac
 All sections follow similar patterns:
 
 **experience.tex** (60 lines)
+
 - Uses `\cvsection{WORK EXPERIENCE}` + `cventries` environment
 - Each job is a `\cventry{Company}{Position}{Location}{Dates}{description}`
 - Description uses nested `cvitems` (itemize-based) for bullet points
 - Pattern: Company link → role → location/dates → bullets
 
 **education.tex** (40 lines)
+
 - Uses `\smallcventry{Institution}{Degree}{Location}{Year}{Grade}{Extra}`
 - One entry per degree
 - Extra param allows nested `cvitems` (currently unused)
 
 **projects.tex** (70 lines)
+
 - Same structure as experience.tex
 - GitHub/demo links in company field
 - Shorter date ranges
 
 **achievements.tex** (16 lines)
+
 - Simple itemize list, no special commands
 - Bullet points with `\textbf{}` for emphasis
 
 **skills.tex** (9 lines)
+
 - Simplified format (removed conditional logic)
 - Uses `\\` and `\vspace{}` for spacing
 - Pattern: **Category**: comma-separated list
 
 **courses.tex**, **interests.tex**
+
 - Simple text with `$|$` separators
 - Not included in main resume, available for variants
 
 ### Variant Files
 
 **variants/resume-swe.tex** (45 lines)
+
 - Software Engineering focus
 - Includes: experience, education, achievements, projects
 - Uses `../` paths for config and section imports
 - SEO text at bottom (hidden white text for ATS)
 
 **variants/resume-data.tex** (48 lines)
+
 - Data Science focus
 - Includes: experience, education, **skills**, achievements, projects
 - Different SEO text emphasizing data science keywords
@@ -179,17 +191,20 @@ All sections follow similar patterns:
 ### Update Personal Information
 
 **ALWAYS edit** `config/profile.tex`:
+
 ```latex
 \def\fullname{NEW NAME}
 \def\email{new.email@example.com}
 \def\phone{+1-234-567-8900}
 % ... etc
 ```
+
 Run `make` to rebuild all resumes.
 
 ### Add New Work Experience
 
 Edit `sections/experience.tex`:
+
 ```latex
 \cventry
 {Company Name}
@@ -207,11 +222,13 @@ Edit `sections/experience.tex`:
 ### Create New Resume Variant
 
 1. Copy existing variant:
+
    ```bash
    cp variants/resume-swe.tex variants/resume-ml.tex
    ```
 
 2. Edit to include different sections:
+
    ```latex
    % Change which sections are included
    \input{../sections/experience.tex}
@@ -227,6 +244,7 @@ Edit `sections/experience.tex`:
 ### Modify Page Layout
 
 Edit `config/style.tex`:
+
 ```latex
 % Change margins (line ~12)
 \usepackage[a4paper, margin=0.25in]{geometry}  % Try 0.5in, 1cm, etc.
@@ -241,6 +259,7 @@ Edit `config/style.tex`:
 ### Add New Section
 
 1. Create `sections/certifications.tex`:
+
    ```latex
    \cvsection{\textbf{CERTIFICATIONS}}
    \begin{cvitems}
@@ -283,6 +302,7 @@ xelatex resume-swe.tex
 ```
 
 **Note**: Always use `xelatex`, not `pdflatex`. XeLaTeX is required for:
+
 - FontAwesome icons
 - Unicode support
 - Custom fonts in `fonts/` directory
@@ -329,6 +349,7 @@ Missing character: There is no ₹ (U+20B9) in font [lmroman10-regular]
 ```
 
 The rupee symbol may not render in default fonts. Consider:
+
 - Using `\textcolor{red}{₹}` for visibility
 - Or replacing with "INR" or "Rs."
 - Or using a font that supports Indian Rupee
@@ -344,6 +365,7 @@ This occurs if compiling twice without cleaning. Run `make clean` first. The err
 ### Build Artifacts
 
 The following files are generated during compilation:
+
 - `*.aux` - Auxiliary file (references)
 - `*.log` - Compilation log
 - `*.out` - Hyperref output file
@@ -357,17 +379,20 @@ All are listed in `.gitignore` and cleaned by `make clean`.
 Files in `legacy/` are **archived for reference only**:
 
 **awesome-cv.cls** (704 lines)
+
 - Original document class from Awesome-CV template
 - 35% was unused (cover letter system, photo system, subentry system)
 - No longer used; main resume now uses `extarticle` class with custom commands
 
 **cv.tex** (78 lines)
+
 - Original two-page template
 - Used awesome-cv.cls
 - Had different personal info (Yash Srivastav - indicates borrowed template)
 - Kept for reference but not maintained
 
 **education-full.tex**
+
 - Alternate education section with table layout
 - Entirely commented out in original
 - Saved for potential future use
@@ -379,6 +404,7 @@ Files in `legacy/` are **archived for reference only**:
 This codebase was refactored in April 2026 from a monolithic structure to modular architecture:
 
 **Before**:
+
 - Single 126-line file with embedded data, styles, commands
 - 704-line class file (35% unused)
 - Conditional compilation logic (`\ifdefined\ONEPAGE`)
@@ -386,6 +412,7 @@ This codebase was refactored in April 2026 from a monolithic structure to modula
 - Manual compilation only
 
 **After**:
+
 - 3 config files + 8 section files + main file
 - No unused code
 - Clean separation of concerns
@@ -433,6 +460,7 @@ resume.pdf (output)
 ### Dependencies
 
 **Required packages** (loaded in style.tex):
+
 - inputenc, babel - Character encoding and language
 - ragged2e - Text alignment
 - xcolor - Color support
@@ -451,6 +479,7 @@ resume.pdf (output)
 ### Color Scheme
 
 Currently minimal:
+
 - Default black text
 - White text for hidden SEO keywords
 - Link colors inherited from hyperref defaults (hidden with `hidelinks` option)
@@ -473,7 +502,8 @@ Potential improvements (not yet implemented):
 ## Contact & Ownership
 
 **Owner**: Anshuman Singh
-- Email: singh.anshuman.singh8@gmail.com
+
+- Email: f20180039@gmail.com
 - Current role: Frontend Engineer, HealthPlix Technologies
 - Education: BITS Pilani ENI'22
 

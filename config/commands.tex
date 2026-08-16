@@ -10,6 +10,12 @@
 \let\@strong\@@strong
 \makeatother
 
+% ATS-safe icon wrapper.
+% FontAwesome glyphs live in the Unicode Private Use Area (U+F0E0 etc), which
+% resume parsers extract as garbage next to the contact details. ActualText={}
+% keeps the icon visible while making text extraction skip it entirely.
+\newcommand{\atsicon}[1]{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+
 % Section header with horizontal rule
 \newcommand{\cvsection}[1]{
   \section*{\sc #1}
@@ -68,13 +74,13 @@
 % Header generation macro using profile data
 \newcommand{\makeheader}{
   \begin{minipage}[t]{\textwidth}
-  {\Huge\textbf{\sc \href{\portfolio}{\fullname}}}
+  {\Huge\textbf{\href{\portfolio}{\fullname}}}
   \hfill
-  {\footnotesize \href{mailto:\email}{\email\ \faEnvelope} \textbar{} \phone\ \faMobile}
+  {\footnotesize \href{mailto:\email}{\email\ \atsicon{\faEnvelope}} \textbar{} \phone\ \atsicon{\faMobile}}
 
   \jobtitle\ $|$ \education
   \hfill
-  {\footnotesize \href{\linkedin}{\linkedinhandle\ \faLinkedin} \textbar{} \href{\portfolio}{Portfolio\ \faGlobe}}
+  {\footnotesize \href{\linkedin}{\linkedinhandle\ \atsicon{\faLinkedin}} \textbar{} \href{\portfolio}{Portfolio\ \atsicon{\faGlobe}}}
   \end{minipage}
   \vspace{1mm}
 }

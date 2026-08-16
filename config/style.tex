@@ -36,6 +36,10 @@
 % Hyperlinks
 \usepackage[hidelinks, unicode]{hyperref}
 
+% Accessibility support: lets us override what text extractors read for a glyph.
+% Used by \atsicon to hide FontAwesome private-use codepoints from ATS parsers.
+\usepackage{accsupp}
+
 % Section title spacing
 \usepackage[compact]{titlesec}
 \titlespacing*{\section}{0pt}{2pt plus 0pt minus 0pt}{0pt plus 2pt minus 2pt}
