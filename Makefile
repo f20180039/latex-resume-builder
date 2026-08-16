@@ -11,7 +11,7 @@ FE_JOBNAME = $(FULL_NAME_SAFE)_$(YEARS_OF_EXPERIENCE)$(ROLE_ABBREV)
 FE_OUTPUT = $(FE_JOBNAME).pdf
 COMMON_DEPS = config/*.tex sections/*.tex
 
-.PHONY: all resume clean cleanall variants swe data single-col help
+.PHONY: all resume clean cleanall variants single-col help
 
 # Default target: build frontend resume
 all: $(FE_OUTPUT)
@@ -20,7 +20,7 @@ all: $(FE_OUTPUT)
 resume: $(FE_OUTPUT)
 
 # Build all variants
-variants: swe data single-col
+variants: single-col
 
 # Build main frontend resume with role-specific output filename
 $(FE_OUTPUT): resume.tex $(COMMON_DEPS)
@@ -43,44 +43,6 @@ $(FE_OUTPUT): resume.tex $(COMMON_DEPS)
 resume.pdf: $(FE_OUTPUT)
 	@cp $(FE_OUTPUT) resume.pdf
 	@echo "✓ Copied $(FE_OUTPUT) to resume.pdf"
-
-# Build Software Engineering variant
-swe: variants/resume-swe.pdf
-
-variants/resume-swe.pdf: variants/resume-swe.tex $(COMMON_DEPS)
-	@echo "Building Software Engineering variant..."
-	@if ! command -v $(LATEX) > /dev/null 2>&1; then \
-		echo "✗ $(LATEX) not found. Install XeLaTeX to build PDFs."; \
-		exit 1; \
-	fi
-	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-swe.tex > /dev/null 2>&1 || true
-	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-swe.tex > /dev/null 2>&1 || true
-	@if [ -f variants/resume-swe.pdf ]; then \
-		echo "✓ Built variants/resume-swe.pdf"; \
-	else \
-		echo "✗ Build failed"; \
-		[ -f variants/resume-swe.log ] && cat variants/resume-swe.log; \
-		exit 1; \
-	fi
-
-# Build Data Science variant
-data: variants/resume-data.pdf
-
-variants/resume-data.pdf: variants/resume-data.tex $(COMMON_DEPS)
-	@echo "Building Data Science variant..."
-	@if ! command -v $(LATEX) > /dev/null 2>&1; then \
-		echo "✗ $(LATEX) not found. Install XeLaTeX to build PDFs."; \
-		exit 1; \
-	fi
-	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-data.tex > /dev/null 2>&1 || true
-	@cd variants && $(LATEX) $(LATEX_FLAGS) resume-data.tex > /dev/null 2>&1 || true
-	@if [ -f variants/resume-data.pdf ]; then \
-		echo "✓ Built variants/resume-data.pdf"; \
-	else \
-		echo "✗ Build failed"; \
-		[ -f variants/resume-data.log ] && cat variants/resume-data.log; \
-		exit 1; \
-	fi
 
 # Build Single Column variant
 single-col: variants/resume-single-col.pdf
@@ -120,9 +82,7 @@ help:
 	@echo "  make             - Build $(FE_OUTPUT)"
 	@echo "  make resume      - Build $(FE_OUTPUT)"
 	@echo "  make resume.pdf  - Build $(FE_OUTPUT) and copy it to resume.pdf"
-	@echo "  make variants    - Build all resume variants (SWE, Data Science, Single Column)"
-	@echo "  make swe         - Build Software Engineering variant"
-	@echo "  make data        - Build Data Science variant"
+	@echo "  make variants    - Build all resume variants (Single Column)"
 	@echo "  make single-col  - Build Single Column variant"
 	@echo "  make clean       - Remove build artifacts (.aux, .log, etc.)"
 	@echo "  make cleanall    - Remove all generated files including PDFs"

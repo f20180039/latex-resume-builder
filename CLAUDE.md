@@ -35,8 +35,7 @@ This is a modular, maintainable LaTeX resume template system that has been refac
 │   ├── interests.tex         # Personal interests
 │   └── programming.tex       # (legacy, not used in main resume)
 ├── variants/                  # Role-specific resume versions
-│   ├── resume-swe.tex        # Software Engineering focus
-│   └── resume-data.tex       # Data Science focus
+│   └── resume-single-col.tex # Single-column, ATS-friendly layout
 ├── legacy/                    # Archived old files (reference only)
 │   ├── cv.tex                # Original two-page template
 │   ├── awesome-cv.cls        # Original class file (704 lines, 35% unused)
@@ -130,18 +129,17 @@ All sections follow similar patterns:
 
 ### Variant Files
 
-**variants/resume-swe.tex** (45 lines)
+**variants/resume-single-col.tex**
 
-- Software Engineering focus
-- Includes: experience, education, achievements, projects
+- Single-column layout, intended for ATS submissions where two-column
+  reading order would interleave the columns
+- Includes: experience, projects, skills, education, certifications
 - Uses `../` paths for config and section imports
-- SEO text at bottom (hidden white text for ATS)
+- Must set `\raggedright`: the preamble disables hyphenation
+  (`\hyphenpenalty 10000`), so justified text overflows the right margin
 
-**variants/resume-data.tex** (48 lines)
-
-- Data Science focus
-- Includes: experience, education, **skills**, achievements, projects
-- Different SEO text emphasizing data science keywords
+The `resume-swe.tex` and `resume-data.tex` variants were removed in August 2026
+as unused.
 
 ## Custom Commands Reference
 
@@ -224,7 +222,7 @@ Edit `sections/experience.tex`:
 1. Copy existing variant:
 
    ```bash
-   cp variants/resume-swe.tex variants/resume-ml.tex
+   cp variants/resume-single-col.tex variants/resume-ml.tex
    ```
 
 2. Edit to include different sections:
@@ -281,8 +279,7 @@ Edit `config/style.tex`:
 ```bash
 make              # Build main resume.pdf
 make variants     # Build all variants
-make swe          # Build Software Engineering variant only
-make data         # Build Data Science variant only
+make single-col   # Build Single Column variant only
 make clean        # Remove .aux, .log, .out files
 make cleanall     # Remove all including PDFs
 make help         # Show help message
@@ -295,10 +292,10 @@ make help         # Show help message
 xelatex resume.tex
 
 # Variant (from root)
-cd variants && xelatex resume-swe.tex
+cd variants && xelatex resume-single-col.tex
 
 # Or from variants directory
-xelatex resume-swe.tex
+xelatex resume-single-col.tex
 ```
 
 **Note**: Always use `xelatex`, not `pdflatex`. XeLaTeX is required for:
